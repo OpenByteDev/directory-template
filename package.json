@@ -9,14 +9,14 @@
         "url": "https://github.com/OpenByteDev/Generators.git"
     },
     "dependencies": {
-        "rmdir-recursive-async": "0.1.0",
+        "rmdir-recursive-async": "^0.2.0",
         "string-replace-async": "^1.2.1"
     },
     "devDependencies": {},
     "scripts": {},
-	"bin": {
-		"dtgen": "index.js"
-	},
+    "bin": {
+        "dtgen": "index.js"
+    },
     "keywords": [
         "generator"
     ],
