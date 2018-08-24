@@ -18,7 +18,7 @@ async function main() {
 
 	const templateDir = args[0];
 	const templateDirStats = await afs.stat(templateDir).catch(() => null);
-	if (templateDir === null || !templateDirStats.isDirectory())
+	if (templateDirStats === null || !templateDirStats.isDirectory())
 		return Promise.reject('Invalid template directory specified: ' + templateDir);
 	
 	
@@ -27,9 +27,8 @@ async function main() {
 	
 	const targetDir = args[1];
 	if (fs.existsSync(targetDir))
-		await rmdirRecursiveAsync(targetDir);
-	await afs.mkdir(targetDir)
-	
+		await rmdirRecursiveAsync(targetDir, false);
+	await afs.mkdir(targetDir);
 	
 	return run(templateDir, targetDir);
 }
