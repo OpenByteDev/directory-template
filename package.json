@@ -18,7 +18,10 @@
         "dtgen": "index.js"
     },
     "keywords": [
-        "generator"
+        "generator",
+        "template",
+        "directory",
+        "folder"
     ],
     "license": "MIT",
     "bugs": {
