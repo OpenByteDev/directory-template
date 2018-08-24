@@ -1,0 +1,25 @@
+{
+    "name": "generators",
+    "version": "0.1.0",
+    "description": "Generate packages based on templates.",
+    "author": "OpenByte <development.openbyte@gmail.com>",
+    "main": "index.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/OpenByteDev/Generators.git"
+    },
+    "dependencies": {
+        "rmdir-recursive-async": "0.1.0",
+        "string-replace-async": "^1.2.1"
+    },
+    "devDependencies": {},
+    "scripts": {},
+    "keywords": [
+        "generator"
+    ],
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/OpenByteDev/Generators/issues"
+    },
+    "homepage": "https://github.com/OpenByteDev/Generators#readme"
+}
