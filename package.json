@@ -1,6 +1,6 @@
 {
     "name": "directory-template",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "description": "Generate directories based on templates.",
     "author": "OpenByte <development.openbyte@gmail.com>",
     "main": "index.js",
