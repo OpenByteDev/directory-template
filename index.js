@@ -88,7 +88,7 @@ async function fillFile(file, target) {
 
 async function replace(str) {
 	const regex = /{{([^{}]+)}}/ig;
-	return stringReplaceAsync(str, regex, replacer);
+	return stringReplaceAsync.seq(str, regex, replacer);
 }
 
 async function replacer(match, p1) {
