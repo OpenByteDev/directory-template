@@ -10,7 +10,8 @@
     },
     "dependencies": {
         "rmdir-recursive-async": "^0.2.0",
-        "string-replace-async": "^1.2.1"
+        "string-replace-async": "^1.2.1",
+        "yargs": "^12.0.1"
     },
     "devDependencies": {},
     "scripts": {},

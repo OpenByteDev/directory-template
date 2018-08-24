@@ -7,37 +7,57 @@ const afs = fs.promises;
 const readline = require('readline');
 const rmdirRecursiveAsync = require('rmdir-recursive-async');
 const stringReplaceAsync = require('string-replace-async');
+const yargs = require('yargs');
 
 const data = new Map();
 
 async function main() {
-	const args = process.argv.slice(2);
-	
-	if (args.length < 1)
-		return Promise.reject('Template directory not specified');
+    const args = yargs
+		.scriptName('directory-template')
+		.option('template', {
+			alias: 't',
+			describe: 'Template directory',
+            type: 'string',
+            demandOption: true,
+            normalize: true,
+            requiresArg: true,
+            coerce: e => validateDirectory(e, 'Template')
+		})
+        .option('out', {
+            alias: 'o',
+            describe: 'Target directory',
+            type: 'string',
+			demandOption: true,
+            normalize: true,
+            requiresArg: true,
+            coerce: e => validateDirectory(e, 'Target')
+        })
+		.option('clear', {
+			describe: 'Clear target directory',
+			default: false
+        })
+		.help()
+		.parse();
 
-	const templateDir = args[0];
-	const templateDirStats = await afs.stat(templateDir).catch(() => null);
-	if (templateDirStats === null || !templateDirStats.isDirectory())
-		return Promise.reject('Invalid template directory specified: ' + templateDir);
+	if (args.clear)
+		await rmdirRecursiveAsync(args.out, false);
 	
-	
-	if (args.length < 2)
-		return Promise.reject('Target directory not specified');
-	
-	const targetDir = args[1];
-	if (fs.existsSync(targetDir))
-		await rmdirRecursiveAsync(targetDir, false);
-	await afs.mkdir(targetDir);
-	
-	return run(templateDir, targetDir);
+	return run(args.template, args.out);
+}
+
+function validateDirectory(path, name) {
+	if (!fs.existsSync(path))
+        throw new TypeError(name + ' does not exist');
+	const stats = fs.statSync(path);
+	if (!stats.isDirectory())
+		throw new TypeError(name + ' has to be a directory');
+	return path;
 }
 
 async function run(template, target) {
-	const dir = template;
-	const files = await afs.readdir(dir);
-	for (file of files) {
-		const p = path.join(dir, file);
+	const files = await afs.readdir(template);
+	for (const file of files) {
+		const p = path.join(template, file);
 		const stats = await afs.stat(p);
 		if (stats.isDirectory())
 			await run(p, await fillDir(p, target));
@@ -46,7 +66,7 @@ async function run(template, target) {
 }
 
 async function fillDir(dir, target) {
-	console.log('Directory: ', file);
+	console.log('Directory: ', dir);
 	const name = path.basename(dir);
 	const targetName = await replace(name);
 	const targetDir = path.join(target, targetName);
